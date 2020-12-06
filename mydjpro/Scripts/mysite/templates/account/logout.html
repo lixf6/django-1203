@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+
+{% block title %}Logout{% endblock %}
+
+{% block content %}
+<div class='row text-center'>
+    <p>你已经愉快地退出了。</p>
+    <p>如果还想回去，点这里吧：<a href="{% url 'account:user_login' %}">登录</a></p>
+</div>
+{% endblock %}
