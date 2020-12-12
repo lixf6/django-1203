@@ -7,7 +7,11 @@
 <div class='row text-center'>
     <h1>登录</h1>
     <p>输入用户名和密码</p>
+    {% if next %}        <!--new-->
+    <form class='form-horizontal' action="{% url 'account:user_login' %}?next={{next}}" method='post'>  <!--new-->
+    {% else %}           <!--new-->
     <form class='form-horizontal' action="{% url 'account:user_login' %}" method='post'>
+    {% endif %}          <!--new-->
     {% csrf_token %}
         <div class='form-group'>
             <label class="col-md-5 control-label">用户名：</label>
@@ -19,5 +23,6 @@
         </div>
         <input type='submit' class='btn btn-primary btn-lg' value='登录'>
     </form>
+    <p>忘记了密码怎么办：<a href="{% url 'account:password_reset' %}">重置密码</a></p>
 </div>
 {% endblock %}

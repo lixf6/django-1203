@@ -2,6 +2,9 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from django.contrib.auth import authenticate, login
 from .forms import LoginForm, RegistrationForm, UserProfileForm
+from django.contrib.auth.decorators import login_required
+from .models import UserProfile, UserInfo
+from django.contrib.auth.models import User
 
 
 def user_login(request):
@@ -41,3 +44,10 @@ def register(request):
             return HttpResponse('恭喜，注册成功了。')
         else:
             return HttpResponse('Sorry，注册失败了。')
+
+
+@login_required()
+def myself(request):
+    userprofile = UserProfile.objects.get(user=request.user) if hasattr(request.user, 'userprofile') else UserProfile.objects.create(user=request.user)
+    userinfo = UserInfo.objects.get(user=request.user) if hasattr(request.user, 'userinfo') else UserInfo.objects.create(user=request.user)
+    return render(request, "account/myself.html", {"user":request.user, "userinfo":userinfo, "userprofile":userprofile})
